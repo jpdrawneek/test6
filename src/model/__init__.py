@@ -61,6 +61,15 @@ class AuthToken(db.Model):
         token = hash.hexdigest()[:10]
         super(AuthToken, self).__init__(token=token, **kwargs)
 
+    def token_is_valid(token):
+        """ This needs to be done properly, with a proper token. """
+        try:
+            print(token)
+            print(str(db.session.query(AuthToken).filter_by(token=token)))
+            return db.session.query(AuthToken).filter_by(token=token).one()
+        except:
+            return False
+
 
 def validate_token(email, token):
     try:

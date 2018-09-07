@@ -7,9 +7,11 @@ def test_create_todo(test_client):
     response = test_client.post(
         '/api/todo',
         json={
-            'auth-token': 'ValidToken',
             'summary': 'Test todo',
             'description': 'Some sort of todo'
+        },
+        headers={
+            'auth-token': 'ValidToken'
         }
     )
     assert response.status_code == 200
