@@ -55,3 +55,9 @@ def setup_db():
         User(email="test.user2@example.net", password="ValidPassword2")
     ])
     _db.session.commit()
+    token1 = AuthToken(user_id=1)
+    token1.token = 'ValidToken'
+    _db.session.add_all([
+        token1
+    ])
+    _db.session.commit()
