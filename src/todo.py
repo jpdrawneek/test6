@@ -22,7 +22,10 @@ def create():
 @bp.route('/todo/<todo_id>', methods=['GET'])
 def get(todo_id):
     item = Todo.query.get(todo_id)
-    return jsonify(item.serialize())
+    if item is None:
+        return ('', 404)
+    else:
+        return jsonify(item.serialize())
 
 
 @bp.route('/todo', methods=['GET'])

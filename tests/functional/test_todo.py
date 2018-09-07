@@ -44,6 +44,17 @@ def test_mark_todo_complete(test_client):
     )
     assert response.status_code == 204
     json_data = response.get_json()
+    assert json_data is None
+    response = test_client.get(
+        '/api/todo/1',
+        headers={
+            'auth-token': 'ValidToken'
+        }
+    )
+    assert response.status_code == 200
+    json_data = response.get_json()
+    assert json_data['id'] == 1
+    assert json_data['status'] == 'complete'
 
 def test_delete_todo(test_client):
     response = test_client.delete(
@@ -54,4 +65,11 @@ def test_delete_todo(test_client):
     )
     assert response.status_code == 204
     json_data = response.get_json()
-
+    assert json_data is None
+    response = test_client.get(
+        '/api/todo/1',
+        headers={
+            'auth-token': 'ValidToken'
+        }
+    )
+    assert response.status_code == 404
