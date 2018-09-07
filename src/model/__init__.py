@@ -36,6 +36,17 @@ class Todo(db.Model):
             'status':    self.status
         }
 
+    def merge_update(self, data):
+        """Merge in data to update attributes in this object"""
+        flag = True
+        for key, value in data.items():
+            if key in ['summary', 'description', 'status']:
+                setattr(self, key, value)
+            else:
+                flag = False
+
+        return flag
+
 
 class AuthToken(db.Model):
     id = db.Column(db.Integer, primary_key=True)

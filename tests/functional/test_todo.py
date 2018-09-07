@@ -38,9 +38,9 @@ def test_mark_todo_complete(test_client):
         headers={
             'auth-token': 'ValidToken'
         },
-        data=dict(
-            status='complete'
-        )
+        json={
+            'status': 'complete'
+        }
     )
     assert response.status_code == 204
     json_data = response.get_json()
