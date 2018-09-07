@@ -1,4 +1,6 @@
 from flask import Blueprint, jsonify, request
+from src import db
+from src.model import User, validate_user
 
 bp = Blueprint('auth', __name__, url_prefix='/api')
 
@@ -6,7 +8,8 @@ bp = Blueprint('auth', __name__, url_prefix='/api')
 @bp.route('/authenticate', methods=['POST'])
 def login():
     data = request.get_json()
-    if data['email'] == 'test.user@example.net' and data['password'] == 'ValidPassword':
+    print(validate_user(data['email'], data['password']))
+    if validate_user(data['email'], data['password']) is not False:
         return jsonify({'auth-token': 'ValidToken'})
     else:
         return ('', 401)
