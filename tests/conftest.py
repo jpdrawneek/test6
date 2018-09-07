@@ -58,6 +58,7 @@ def setup_db():
     token1 = AuthToken(user_id=1)
     token1.token = 'ValidToken'
     _db.session.add_all([
-        token1
+        token1,
+        Todo(summary='test1', user_id=1,description='a test', status='New')
     ])
     _db.session.commit()

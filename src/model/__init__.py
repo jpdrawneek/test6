@@ -28,6 +28,14 @@ class Todo(db.Model):
     user = db.relationship('User',
                            backref=db.backref('todos', lazy=True))
 
+    def serialize(self):
+        """Return object data in easily serializeable format"""
+        return {
+            'id': self.id,
+            'summary': self.summary,
+            'status':    self.status
+        }
+
 
 class AuthToken(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -42,9 +50,11 @@ class AuthToken(db.Model):
         token = hash.hexdigest()[:10]
         super(AuthToken, self).__init__(token=token, **kwargs)
 
+
 def validate_token(email, token):
     try:
-        user = db.session.query(AuthToken).filter_by(token=token).join(AuthToken.user, aliased=True).filter_by(email=email).one()
+        user = db.session.query(AuthToken).filter_by(token=token).join(
+            AuthToken.user, aliased=True).filter_by(email=email).one()
         return user
     except:
         return False

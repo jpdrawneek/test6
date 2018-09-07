@@ -1,20 +1,21 @@
 """
 Testing todo from API.
 """
+import json
 
 def test_create_todo(test_client):
     response = test_client.post(
         '/api/todo',
-        data={
+        json={
             'auth-token': 'ValidToken',
-            'subject': 'Test todo',
+            'summary': 'Test todo',
             'description': 'Some sort of todo'
         }
     )
     assert response.status_code == 200
     json_data = response.get_json()
     assert 'id' in json_data
-    assert json_data['id'] == 1
+    assert json_data['id'] == 2
 
 def test_list_user_todo(test_client):
     response = test_client.get(
@@ -25,6 +26,11 @@ def test_list_user_todo(test_client):
     )
     assert response.status_code == 200
     json_data = response.get_json()
+    assert len(json_data) == 1
+    item = json_data.pop()
+    assert 'id' in item
+    assert 'summary' in item
+    assert item['summary'] == 'test1'
 
 def test_mark_todo_complete(test_client):
     response = test_client.patch(

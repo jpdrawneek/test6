@@ -22,13 +22,13 @@ def create():
 @bp.route('/todo/<todo_id>', methods=['GET'])
 def get(todo_id):
     item = Todo.query.get(todo_id)
-    return jsonify(item)
+    return jsonify(item.serialize())
 
 
 @bp.route('/todo', methods=['GET'])
 def list_all():
-    list = Todo.query.filter_by(user_id=1)
-    return jsonify(list)
+    todo_list = Todo.query.filter_by(user_id=1).all()
+    return jsonify([i.serialize() for i in todo_list])
 
 
 @bp.route('/todo/<todo_id>', methods=['DELETE'])
