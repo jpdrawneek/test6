@@ -1,6 +1,9 @@
 """
 Model definition for todo data type.
 """
+from flask_sqlalchemy import SQLAlchemy
+from . import user
+db = SQLAlchemy()
 
 class Todo(db.Model):
     id = db.Column(db.Integer, primary_key=True)
