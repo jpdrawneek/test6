@@ -24,7 +24,7 @@ def test_list_user_todo(test_client):
         }
     )
     assert response.status_code == 200
-    json_data = json.loads(response.data)
+    json_data = response.get_json()
 
 def test_mark_todo_complete(test_client):
     response = test_client.patch(
@@ -37,7 +37,7 @@ def test_mark_todo_complete(test_client):
         )
     )
     assert response.status_code == 204
-    json_data = json.loads(response.data)
+    json_data = response.get_json()
 
 def test_delete_todo(test_client):
     response = test_client.delete(
@@ -47,5 +47,5 @@ def test_delete_todo(test_client):
         }
     )
     assert response.status_code == 204
-    json_data = json.loads(response.data)
+    json_data = response.get_json()
 

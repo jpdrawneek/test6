@@ -1,8 +1,11 @@
-from flask import Flask
-from flask_restful import Resource, Api
+import sys
+import os
+myPath = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, myPath + '/../')
 
-app = Flask(__name__)
-api = Api(app)
+from src import create_app
+
+app = create_app('flask.cfg')
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
