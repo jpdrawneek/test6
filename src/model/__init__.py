@@ -56,6 +56,7 @@ class AuthToken(db.Model):
                            backref=db.backref('authtoken', lazy=True))
 
     def __init__(self, **kwargs):
+        """ Generate token automatically, needs to be done with a proper token like JWT. """
         hash = hashlib.sha1()
         hash.update(str(time.time()).encode('utf-8'))
         token = hash.hexdigest()[:10]

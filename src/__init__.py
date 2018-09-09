@@ -22,7 +22,6 @@ def check_token(func):
             abort(401)
         from src.model import AuthToken
         token = AuthToken.token_is_valid(request.headers['auth-token'])
-        print(token)
         if token is not False:
             return func(token=token, *args, **kwargs)
         else:
